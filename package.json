@@ -6,17 +6,22 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "clean:install": "rm -rf node_modules pnpm-lock.yaml && pnpm install"
   },
   "dependencies": {
+    "country-list": "^2.3.0",
+    "dayjs": "^1.11.13",
     "expo": "~52.0.32",
     "expo-status-bar": "~2.0.1",
     "react": "18.3.1",
     "react-native": "0.76.7",
+    "react-native-country-flag": "^2.0.2",
     "react-native-safe-area-context": "^5.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
+    "@types/country-list": "^2.1.4",
     "@types/react": "~18.3.12",
     "typescript": "^5.3.3"
   },
