@@ -1,9 +1,9 @@
 # Global Users App 🧑‍🦱 👩‍🦱
 
 <p align="center">
-  <img width="30%" height="50%" src="https://github.com/fwankieeeee/GlobalUsers/blob/main/screenshots/username-search.png" />
-  <img width="30%" height="50%" src="https://github.com/fwankieeeee/GlobalUsers/blob/main/screenshots/country-search.png" />
-  <img width="30%" height="50%" src="https://github.com/fwankieeeee/GlobalUsers/blob/main/screenshots/page.png" />
+  <img width="30%" height="50%" src="https://github.com/fwankieeeee/GlobalUsers/blob/master/screenshots/username-search.png" />
+  <img width="30%" height="50%" src="https://github.com/fwankieeeee/GlobalUsers/blob/master/screenshots/country-search.png" />
+  <img width="30%" height="50%" src="https://github.com/fwankieeeee/GlobalUsers/blob/master/screenshots/page.png" />
 </p>
 
 # Description
