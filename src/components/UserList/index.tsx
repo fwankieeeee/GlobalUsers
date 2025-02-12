@@ -1,9 +1,11 @@
 import fetchUsers from "@/api/fetchUsers";
+import { USERS_PER_PAGE } from "@/constants";
 import { getName } from "country-list";
 import React, { useEffect, useMemo, useState } from "react";
 import { FlatList, Text, View } from "react-native";
 import { SearchBar, Sort, UserListItem } from "..";
 import CountryFilter from "../CountryFilter";
+import Pagination from "../Pagination";
 import { SortOptions, SortOrderOptions, UserItem } from "../types";
 import styles from "./styles";
 
@@ -14,6 +16,7 @@ const UserList = () => {
   const [sortOrder, setSortOrder] = useState<SortOrderOptions>("desc");
   const [sortBy, setSortBy] = useState<SortOptions>("date");
   const [selectedCountry, setSelectedCountry] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
 
   const handleSearchQuery = (query: string) => {
     setSearchQuery(query);
@@ -31,6 +34,10 @@ const UserList = () => {
 
   const handleSelectCountry = (country: string) => {
     setSelectedCountry(country);
+  };
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
   };
 
   useEffect(() => {
@@ -55,33 +62,31 @@ const UserList = () => {
     ].sort();
   }, [userList]);
 
-  const filteredUserList = useMemo(() => {
-    const filteredList = userList.filter((user) => {
-      const { country, userName } = user;
-      const searchLower = searchQuery.toLowerCase();
-      const countryName = getName(country)?.toLowerCase() || "";
-      const matchedSearch =
-        userName.toLowerCase().includes(searchLower) ||
-        countryName.includes(searchLower) ||
-        country.toLowerCase().includes(searchLower);
+  const filteredUserList = userList.filter((user) => {
+    const { country, userName } = user;
+    const searchLower = searchQuery.toLowerCase();
+    const countryName = getName(country)?.toLowerCase() || "";
+    const matchedSearch =
+      userName.toLowerCase().includes(searchLower) ||
+      countryName.includes(searchLower) ||
+      country.toLowerCase().includes(searchLower);
 
-      return matchedSearch && (!selectedCountry || country === selectedCountry);
-    });
+    return matchedSearch && (!selectedCountry || country === selectedCountry);
+  });
 
-    return filteredList;
-  }, [userList.length, sortBy, sortOrder, selectedCountry, searchQuery]);
+  const filteredSortedList = filteredUserList.sort((a, b) => {
+    if (sortBy === "id") {
+      return parseInt(a.id) - parseInt(b.id);
+    }
+    const dateA = new Date(a.createdAt).getTime();
+    const dateB = new Date(b.createdAt).getTime();
+    return sortOrder === "desc" ? dateB - dateA : dateA - dateB;
+  });
 
-  const filteredSortedList = useMemo(() => {
-    const sortedList = filteredUserList.sort((a, b) => {
-      if (sortBy === "id") {
-        return parseInt(a.id) - parseInt(b.id);
-      }
-      const dateA = new Date(a.createdAt).getTime();
-      const dateB = new Date(b.createdAt).getTime();
-      return sortOrder === "desc" ? dateB - dateA : dateA - dateB;
-    });
-    return sortedList;
-  }, [filteredUserList]);
+  const paginatedUserList = filteredSortedList.slice(
+    (currentPage - 1) * USERS_PER_PAGE,
+    currentPage * USERS_PER_PAGE
+  );
 
   if (errorText) {
     return (
@@ -90,6 +95,8 @@ const UserList = () => {
       </View>
     );
   }
+
+  const totalPages = Math.ceil(filteredSortedList.length / USERS_PER_PAGE);
 
   return (
     <View style={styles.container}>
@@ -113,13 +120,18 @@ const UserList = () => {
         </View>
       </View>
       <FlatList
-        data={filteredSortedList}
+        data={paginatedUserList}
         keyExtractor={(item: UserItem) => item.id}
         renderItem={({ item }: { item: UserItem }) => (
           <UserListItem item={item} />
         )}
         contentContainerStyle={styles.listContainer}
         showsVerticalScrollIndicator={false}
+      />
+      <Pagination
+        totalPages={totalPages}
+        currentPage={currentPage}
+        onPageChange={handlePageChange}
       />
     </View>
   );
