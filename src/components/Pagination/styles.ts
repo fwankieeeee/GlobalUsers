@@ -33,4 +33,7 @@ export default StyleSheet.create({
   activePageButtonText: {
     color: "white",
   },
+  ellipsis: {
+    paddingHorizontal: 8,
+  },
 });
