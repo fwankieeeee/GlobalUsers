@@ -1,25 +1,19 @@
 import React from "react";
-import { TextInput } from "react-native";
-import styles from "./styles";
-
-type SearchBarProps = {
-  onChangeSearchQuery: (query: string) => void;
-  searchQuery: string;
-};
+import { TextInput, View } from "react-native";
+import { SearchBarProps } from "./types";
 
 const SearchBar: React.FC<SearchBarProps> = (props) => {
   const { onChangeSearchQuery, searchQuery } = props;
 
   return (
-    <>
+    <View className="bg-gray-100 text-gray-800 px-4 py-4 rounded-2xl text-base">
       <TextInput
-        style={styles.searchInput}
         placeholder="Search by username or country..."
         value={searchQuery}
         onChangeText={onChangeSearchQuery}
         placeholderTextColor="#999"
       />
-    </>
+    </View>
   );
 };
 

@@ -19,15 +19,4 @@ export default StyleSheet.create({
     textAlign: "center",
     fontWeight: "600",
   },
-  searchSortFilterContainer: {
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    backgroundColor: "white",
-    borderBottomWidth: 1,
-    borderBottomColor: "#eee",
-  },
-  filterContainer: {
-    marginTop: 8,
-    gap: 8,
-  },
 });

@@ -8,7 +8,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "clean:install": "rm -rf node_modules pnpm-lock.yaml && pnpm install",
-    "debug:nativewind": "DEBUG=nativewind pnpm start"
+    "debug:nativewind": "DEBUG=nativewind pnpm start --clear"
   },
   "dependencies": {
     "country-list": "^2.3.0",

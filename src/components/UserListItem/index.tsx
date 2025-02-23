@@ -5,17 +5,9 @@ import localizedFormat from "dayjs/plugin/localizedFormat";
 import dayjs from "dayjs";
 import CountryFlag from "react-native-country-flag";
 import { getName } from "country-list";
+import { UserListItemProps } from "./types";
 
 dayjs.extend(localizedFormat);
-
-type UserListItemProps = {
-  item: {
-    createdAt: string;
-    userName: string;
-    country: string;
-    id: string;
-  };
-};
 
 const UserListItem: React.FC<UserListItemProps> = (props) => {
   const {
@@ -24,20 +16,23 @@ const UserListItem: React.FC<UserListItemProps> = (props) => {
   const countryName = getName(country) || country;
   const formattedDate = dayjs(createdAt).format("LLLL");
   return (
-    <View style={styles.card}>
-      <View style={styles.rowContainer}>
-        <View style={styles.avatar}>
-          <Text style={styles.avatarText}>{id}</Text>
+    <View
+      style={styles.shadowCard}
+      className="bg-white rounded-xl p-4 mb-[16px]"
+    >
+      <View className="flex-row items-center gap-[12px]">
+        <View className="justify-center items-center rounded-full bg-purple-100 size-[40px]">
+          <Text className="text-purple-700 font-medium text-lg">{id}</Text>
         </View>
-        <View style={styles.userInfo}>
-          <Text style={styles.username}>{userName}</Text>
-          <View style={styles.countryContainer}>
+        <View className="mb-4">
+          <Text className="text-slate-900 font-medium text-xl">{userName}</Text>
+          <View className="flex-row items-center">
             <CountryFlag isoCode={country} size={16} style={styles.flag} />
-            <Text style={styles.country}>{countryName}</Text>
+            <Text className="text-lg text-slate-500">{countryName}</Text>
           </View>
         </View>
       </View>
-      <Text style={styles.date}>{formattedDate}</Text>
+      <Text className="text-sm text-slate-500">{formattedDate}</Text>
     </View>
   );
 };

@@ -1,82 +1,62 @@
-import React from 'react';
-import { Text, TouchableOpacity } from 'react-native';
-import styles from './styles';
-
-type PageNumberProps = {
-  currentPage: number;
-  totalPages: number;
-  onPageChange: (page: number) => void;
-}
+import React from "react";
+import { Text, TouchableOpacity } from "react-native";
+import { PageNumberProps } from "./types";
 
 const PageNumbers: React.FC<PageNumberProps> = (props) => {
   const { currentPage, totalPages, onPageChange } = props;
   // Always show first page
   let pages: (string | number)[] = [1];
-    
+
   if (currentPage > 3) {
-    pages = [
-      ...pages,
-     '...',
-    ]
+    pages = [...pages, "..."];
   }
   // Show current page and surrounding pages
   if (currentPage !== 1 && currentPage !== totalPages) {
-    pages = [
-      ...pages,
-      currentPage,
-    ]
+    pages = [...pages, currentPage];
   }
   // Show next page if not last
   if (currentPage + 1 < totalPages) {
-    pages = [
-     ...pages,
-      currentPage + 1,
-    ]
+    pages = [...pages, currentPage + 1];
   }
-  
+
   if (currentPage + 2 < totalPages) {
-    pages = [
-      ...pages,
-      '...'
-    ]
+    pages = [...pages, "..."];
   }
   // Always show last page
   if (totalPages > 1) {
-    pages = [
-     ...pages,
-      totalPages,
-    ]
+    pages = [...pages, totalPages];
   }
-  
+
   return pages.map((page, index) => {
-    if (page === '...') {
+    if (page === "...") {
       return (
-        <Text key={`ellipsis-${index}`} style={[styles.pageButtonText, styles.ellipsis]}>
+        <Text
+          key={`ellipsis-${index}`}
+          className="text-sm text-slate-700 font-bold px-2"
+        >
           {page}
         </Text>
       );
     }
-    
+
     return (
       <TouchableOpacity
         key={index}
-        style={[
-          styles.pageButton,
-          currentPage === page && styles.activePageButton,
-        ]}
+        className={`items-center rounded-full py-2 px-3 bg-gray-200 ${
+          currentPage === page && "bg-blue-400"
+        }`}
         onPress={() => onPageChange(page as number)}
       >
         <Text
-          style={[
-            styles.pageButtonText,
-            currentPage === page && styles.activePageButtonText,
-          ]}
+          className={`text-sm text-slate-700 font-bold ${
+            currentPage === page && "text-white"
+          }`}
         >
           {page}
         </Text>
       </TouchableOpacity>
     );
-  })
-}
+  });
+};
 
-export default PageNumbers
+export default PageNumbers;

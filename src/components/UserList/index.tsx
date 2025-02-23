@@ -99,13 +99,13 @@ const UserList = () => {
   const totalPages = Math.ceil(filteredSortedList.length / USERS_PER_PAGE);
 
   return (
-    <View style={styles.container}>
-      <View style={styles.searchSortFilterContainer}>
+    <View className="flex-1 bg-gray-100">
+      <View className="bg-gray-300 py-4 px-3">
         <SearchBar
           searchQuery={searchQuery}
           onChangeSearchQuery={handleSearchQuery}
         />
-        <View style={styles.filterContainer}>
+        <View className="mt-2 gap-y-[8px]">
           <Sort
             sortBy={sortBy}
             sortOrder={sortOrder}
@@ -125,7 +125,7 @@ const UserList = () => {
         renderItem={({ item }: { item: UserItem }) => (
           <UserListItem item={item} />
         )}
-        contentContainerStyle={styles.listContainer}
+        contentContainerClassName="px-4 pt-2"
         showsVerticalScrollIndicator={false}
       />
       <Pagination

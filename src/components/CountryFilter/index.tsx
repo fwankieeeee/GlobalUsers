@@ -1,18 +1,7 @@
 import React from "react";
-import {
-  FlatList,
-  Text,
-  TouchableOpacity,
-  View
-} from "react-native";
+import { FlatList, Text, TouchableOpacity, View } from "react-native";
 import CountryItem from "./CountryItem";
-import styles from "./styles";
-
-type CountryFilterProps = {
-  countries: string[];
-  selectedCountry: string;
-  onPressSelectedCountry: (country: string) => void;
-};
+import { CountryFilterProps } from "./types";
 
 const CountryFilter: React.FC<CountryFilterProps> = (props) => {
   const { countries, selectedCountry, onPressSelectedCountry } = props;
@@ -22,12 +11,14 @@ const CountryFilter: React.FC<CountryFilterProps> = (props) => {
   };
 
   return (
-    <View style={styles.countryFilter}>
+    <View className="flex-row items-center gap-[8px]">
       <TouchableOpacity
-        style={[styles.filterButton, !selectedCountry && styles.activeFilter]}
+        className={`rounded-full py-[6px] px-3 ${
+          selectedCountry ? "bg-gray-100" : "bg-blue-400"
+        }`}
         onPress={() => handleSelectedCountry("")}
       >
-        <Text style={styles.buttonText}>All</Text>
+        <Text className="text-sm font-medium text-gray-800">All</Text>
       </TouchableOpacity>
       <FlatList
         data={countries}
